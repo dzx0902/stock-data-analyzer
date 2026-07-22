@@ -81,6 +81,10 @@ class Settings:
     backup_interval_hours: int = field(
         default_factory=lambda: _nonnegative_int("GOLD_AGENT_BACKUP_INTERVAL_HOURS", 24, 720)
     )
+    run_local_schedulers: bool = field(
+        default_factory=lambda: os.getenv("GOLD_AGENT_RUN_LOCAL_SCHEDULERS", "1") == "1"
+    )
+    run_feishu: bool = field(default_factory=lambda: os.getenv("GOLD_AGENT_RUN_FEISHU", "1") == "1")
 
     def resolved_db_path(self) -> Path | str:
         path = self.db_path

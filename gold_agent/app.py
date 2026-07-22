@@ -15,12 +15,16 @@ def main() -> None:
 
     from gold_agent.integrations.feishu import on_p2_im_message_receive_v1
 
-    settings.validate_feishu()
     initialize()
-    threading.Thread(target=monitor_alerts, daemon=True).start()
-    threading.Thread(target=monitor_scheduled_reports, daemon=True).start()
-    threading.Thread(target=monitor_backups, daemon=True).start()
-    threading.Thread(target=monitor_strategy_alerts, daemon=True).start()
+    if settings.run_local_schedulers:
+        threading.Thread(target=monitor_alerts, daemon=True).start()
+        threading.Thread(target=monitor_scheduled_reports, daemon=True).start()
+        threading.Thread(target=monitor_backups, daemon=True).start()
+        threading.Thread(target=monitor_strategy_alerts, daemon=True).start()
+    if not settings.run_feishu:
+        print("Gold Agent started without Feishu long connection.")
+        return
+    settings.validate_feishu()
     event_handler = (
         lark.EventDispatcherHandler.builder("", "")
         .register_p2_im_message_receive_v1(on_p2_im_message_receive_v1)
