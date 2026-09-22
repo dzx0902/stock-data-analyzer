@@ -33,7 +33,7 @@ class Settings:
     deepseek_base_url: str = field(
         default_factory=lambda: os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com").strip()
     )
-    deepseek_model: str = field(default_factory=lambda: os.getenv("DEEPSEEK_MODEL", "deepseek-chat").strip())
+    deepseek_model: str = field(default_factory=lambda: os.getenv("DEEPSEEK_MODEL", "deepseek-flash").strip())
     qwen_api_key: str = field(default_factory=lambda: os.getenv("QWEN_API_KEY", "").strip())
     qwen_base_url: str = field(
         default_factory=lambda: os.getenv(
